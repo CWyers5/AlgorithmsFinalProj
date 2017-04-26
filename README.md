@@ -2,7 +2,7 @@
 
 Tasks:
 
-1.Read File, Create Adjacency Matrix -- DONE
+1. Read File, Create Adjacency Matrix -- DONE
 2. Show Direct Routes, distances, and prices
 3. Minimum Spanning Tree (Prims or Kruskals)
 4. Shortest Path Total Miles from A to B
