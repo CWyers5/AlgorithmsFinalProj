@@ -6,17 +6,28 @@
 #include <fstream>
 #include <cstdlib>
 
+int citynum; //first line of file
+std::vector<std::string> names; //for sure
+std::vector<std::vector<int> > connections;
+std::vector<std::vector<int> > costs;
+std::vector<std::vector<int> > distances;
+
+
+void directRoutes();
+void mst();
+void shortestPathMiles(int source, int destination);
+void shortestPathPrice(int source, int destination);
+void shortestPathHops(int source, int destination);
+void tripPriceOptions(int source, double price);
+void newRoute(int source, int destination, int cost, int distance);
+void deleteRoute(int source, int destination, int cost, int distance);
+
+
 
 int main(int argc, char *argv[]) {
 
 	std::string file = argv[1]; //the file name
 
-	int citynum; //first line of file
-
-	std::vector<std::string> names; //for sure
-	std::vector<std::vector<int> > connections;
-	std::vector<std::vector<int> > costs;
-	std::vector<std::vector<int> > distances;
 	/*
 	for (int i = 0; i < citynum; i++){
 		for (int j = 0; j< citynum; j++){
