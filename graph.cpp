@@ -11,27 +11,27 @@ int main(int argc, char *argv[]){
 
 	std::string file = argv[1]; //the file name
 
-  int citynum = 10; //first line of file
+  int citynum; //first line of file
 
 	std::vector<std::string> names; //for sure
-	std::vector<std::vector<int> > connections(citynum, std::vector<int>(citynum));
-	std::vector<std::vector<int> > costs(citynum, std::vector<int>(citynum));
-	std::vector<std::vector<int> > distances(citynum, std::vector<int>(citynum));
-
-for (int i = 0; i < 10; i++){
-	for (int j = 0; j< 10; j++){
+	std::vector<std::vector<int> > connections;
+	std::vector<std::vector<int> > costs;
+	std::vector<std::vector<int> > distances;
+/*
+for (int i = 0; i < citynum; i++){
+	for (int j = 0; j< citynum; j++){
 		connections[i][j] = 9999;
 	}
 }
 
 
-for (int i = 0; i < 10; i++){
-	for (int j = 0; j< 10; j++){
+for (int i = 0; i < citynum; i++){
+	for (int j = 0; j< citynum; j++){
 		std::cout << connections[i][j] << " ";
 	}
 	std::cout << "\n";
 }
-
+*/
   //some of the needed variables
   std::ifstream myfile2;
 
@@ -48,20 +48,32 @@ for (int i = 0; i < 10; i++){
 	getline(myfile2, cityname);
 	std::cout << cityname << "\n";
 	names.push_back(cityname);
-	//names[k].push_back(cityname);
-	//std::cout << names.at(k) << " ";
 }
 
-/*
-  getline(myfile2, dimensions);
-  int seperator = dimensions.find(" "); //only looks for spaces, no tab support
-  int width = std::stoi(dimensions.substr(0, seperator));
-  int height = std::stoi(dimensions.substr(seperator));
-  getline(myfile2, maxcolor);
 
+
+int a;
+int firstnum, secondnum, distance, cost;
   while (!myfile2.eof()){ //get all values, save to a string
-    getline(myfile2, currentline);
-    stringvalues += currentline; }*/
+//read line
+firstnum = a;
+myfile2 >> secondnum;
+myfile2 >> distance;
+myfile2 >> cost;
+std::cout << firstnum << " " << secondnum << " " << distance << " " << cost << std::endl;
+/*connections[firstnum][secondnum] = 1;
+connections[secondnum][firstnum] = 1;
+distances[firstnum][secondnum] = distance;
+distances[secondnum][firstnum] = distance;
+costs[firstnum][secondnum] = cost;
+costs[secondnum][firstnum] = cost;
+*/
+
+
+ }
+
+
+
 
   myfile2.close();
 std::cout << "NAMES SIZE = " << names.size() << std::endl;
