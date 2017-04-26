@@ -5,6 +5,7 @@
 #include <iostream>
 #include <fstream>
 #include <cstdlib>
+#include <iomanip>
 
 int citynum; //first line of file
 std::vector<std::string> names; //for sure
@@ -208,7 +209,6 @@ int main(int argc, char *argv[]) {
 
 	}
 
-
 	//std::cin >> file;
 	return 0;
 }
@@ -246,3 +246,24 @@ void shortestPathHops(int source, int destination){} //depth first search
 void tripPriceOptions(int source, double price){}
 void newRoute(int source, int destination, int cost, int distance){}
 void deleteRoute(int source, int destination){}
+
+void directRoutes() {
+	int maxLen = 0;
+	for (std::string s : names) {
+		maxLen = s.length() > maxLen ? s.length() : maxLen;
+	}
+	for (int i = 0; i < names.size(); i++)
+	{
+		for (int j = 0; j < names.size(); j++)
+		{
+			if (connections[i][j] == 1) {
+				std::cout << std::setw(maxLen) << std::left
+					<< names[i];
+				std::cout << " -> " << std::setw(maxLen) << std::left
+					<<  names[j] << '\t';
+				std::cout << "$" << distances[i][j] << '\t' 
+					<< costs[i][j] << " mi\n";
+			}
+		}
+	}
+}
