@@ -137,14 +137,13 @@ std::cout << "-----------------------------------------------\n";
 std::cout << "|FlightFinder 1.0 by Jared Ford and Clay Wyers|\n";
 std::cout << "-----------------------------------------------\n";
 int input, source, destination;
-/*	while (true) {
+	while (true) {
 std::cout << " Enter 0 for help\n";
 
-		if (counter == 0) {
-			break;
-		}
 
-	} */
+			break;
+
+	}
 
 
 	//std::cin >> file;
