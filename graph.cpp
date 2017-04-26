@@ -85,8 +85,6 @@ for (int i = 0; i < citynum; i++){
 	}
 }
 
-std::cout << "HERE" << std::endl;
-
 
 	double firstnum, secondnum, distance, cost;
 	while (myfile2 >> firstnum >> secondnum >> distance >> cost) { //get all values, save to a string
@@ -137,7 +135,7 @@ std::cout << "-----------------------------------------------\n";
 std::cout << "|FlightFinder 1.0 by Jared Ford and Clay Wyers|\n";
 std::cout << "-----------------------------------------------\n";
 int input, source, destination;
-/*	while (true) {
+//*	while (true) {
 std::cout << " Enter 0 for help\n";
 
 		if (counter == 0) {
