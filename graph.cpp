@@ -175,6 +175,5 @@ std::cout << "HERE" << std::endl;
 	  myfile9.write (processed,fsize);
 	  myfile9.close();
 	*/
-	//std::cin >> file;
 	return 0;
 }
