@@ -238,7 +238,7 @@ void nameOfCities(){
 
 }
 
-void directRoutes(){}
+
 void mst(){}
 void shortestPathMiles(int source, int destination){}
 void shortestPathPrice(int source, int destination){}
@@ -261,7 +261,7 @@ void directRoutes() {
 					<< names[i];
 				std::cout << " -> " << std::setw(maxLen) << std::left
 					<<  names[j] << '\t';
-				std::cout << "$" << distances[i][j] << '\t' 
+				std::cout << "$" << distances[i][j] << '\t'
 					<< costs[i][j] << " mi\n";
 			}
 		}
