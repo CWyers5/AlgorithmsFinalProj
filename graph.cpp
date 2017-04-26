@@ -1,9 +1,10 @@
+//Clay Wyers Jared Ford final Proj
+
 #include <string>
 #include <vector>
 #include <iostream>
 #include <fstream>
 #include <cstdlib>
-//#include "AdjacencyList.hpp"
 
 
 int main(int argc, char *argv[]){
@@ -34,24 +35,21 @@ for (int i = 0; i < 10; i++){
   //some of the needed variables
   std::ifstream myfile2;
 
-
   std::string currentline;
   std::string stringvalues;
 
-  //this chunk of code reads in the file, completely in binary
   myfile2.open (file.c_str());
 	std::string citynumberstring;
 	std::string cityname;
   getline(myfile2,citynumberstring);
-citynum = std::stoi(citynumberstring);
-std::cout << "citynum = " << citynum << "\n";
-names.resize(citynum);
-for (int k = 0; k < citynum; k++){
+	citynum = std::stoi(citynumberstring);
+	std::cout << "citynum = " << citynum << "\n";
+	for (int k = 0; k < citynum; k++){
 	getline(myfile2, cityname);
 	std::cout << cityname << "\n";
 	names.push_back(cityname);
 	//names[k].push_back(cityname);
-	std::cout << names.at(k) << " ";
+	//std::cout << names.at(k) << " ";
 }
 
 /*
@@ -68,7 +66,7 @@ for (int k = 0; k < citynum; k++){
   myfile2.close();
 std::cout << "NAMES SIZE = " << names.size() << std::endl;
 	for (int j = 0; j < names.size(); j++){
-		std::cout << names[j] << " ";
+		std::cout << names[j] << "\n";
 	}
 	std::cout << "\n";
 //std::cout << stringvalues << "\n\n\n" << std::endl;
