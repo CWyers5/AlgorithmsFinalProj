@@ -10,3 +10,7 @@ Tasks:
 6. Shortest Path Based on hops from A to B
 7. Trip Options Based on Total Price
 8. Add New Route, Delete Route, Quit Program.
+
+
+when starting to work, pull
+commit, double click to help merge, then push.
