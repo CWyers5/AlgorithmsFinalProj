@@ -17,10 +17,12 @@ void directRoutes();
 void mst();
 void shortestPathMiles(int source, int destination);
 void shortestPathPrice(int source, int destination);
-void shortestPathHops(int source, int destination);
+void shortestPathHops(int source, int destination); //depth first search
 void tripPriceOptions(int source, double price);
 void newRoute(int source, int destination, int cost, int distance);
-void deleteRoute(int source, int destination, int cost, int distance);
+void deleteRoute(int source, int destination);
+void help();
+void nameOfCities();
 
 
 
@@ -134,15 +136,113 @@ int main(int argc, char *argv[]) {
 	std::cout << "-----------------------------------------------\n";
 	std::cout << "|FlightFinder 1.0 by Jared Ford and Clay Wyers|\n";
 	std::cout << "-----------------------------------------------\n";
-	int input, source, destination;
-	while (true) {
-		std::cout << " Enter 0 for help\n";
-		std::cout << " Enter 1 for no help\n";
-		break;
-//peanut butter
+	int input, source, destination, givenPrice, givenCost, givenDistance;
+	nameOfCities();
+	bool loop = true;
+	while (loop) {
+		std::cout << "Enter 0 for help\n";
+		std::cout << "Enter Command: ";
+		std::cin >> input;
+
+		switch(input){
+			case 0:
+			help();
+			break;
+			case 1:
+			directRoutes();
+			break;
+			case 2:
+			mst();
+			break;
+			case 3:
+			std::cout << "\nEnter Source: ";
+			std::cin >> source;
+			std::cout << "\nEnter Destination: ";
+			std::cin >> destination;
+			shortestPathMiles(source,destination);
+			break;
+			case 4:
+			std::cout << "\nEnter Source: ";
+			std::cin >> source;
+			std::cout << "\nEnter Destination: ";
+			std::cin >> destination;
+			shortestPathPrice(source,destination);
+			break;
+			case 5:
+			std::cout << "\nEnter Source: ";
+			std::cin >> source;
+			std::cout << "\nEnter Destination: ";
+			std::cin >> destination;
+			shortestPathHops(source,destination);
+			break;
+			case 6:
+			std::cout << "\nEnter Source: ";
+			std::cin >> source;
+			std::cout << "\nEnter Money Amount: ";
+			std::cin >> givenPrice;
+			tripPriceOptions(source,givenPrice);
+			break;
+			case 7:
+			std::cout << "\nEnter Source: ";
+			std::cin >> source;
+			std::cout << "\nEnter Destination: ";
+			std::cin >> destination;
+			std::cout << "\nEnter Cost: ";
+			std::cin >> givenCost;
+			std::cout << "\nEnter Distance: ";
+			std::cin >> givenDistance;
+			newRoute(source,destination,givenCost,givenDistance);
+			break;
+			case 8:
+			std::cout << "\nEnter Source";
+			std::cin >> source;
+			std::cout << "\nEnter Destination";
+			std::cin >> destination;
+			deleteRoute(source,destination);
+			break;
+			case 9:
+			loop = false;
+			break;
+
+		}
+
 	}
 
 
 	//std::cin >> file;
 	return 0;
 }
+
+void help(){
+	using namespace std;
+	cout << "************************************\n";
+	cout << "             HELP MENU               \n";
+	cout << "Enter 1 to Display Direct Routes\n";
+	cout << "Enter 2 for Minimum Spanning Tree\n";
+	cout << "Enter 3 for Shortest Path (based on Miles) point A to Point B\n";
+	cout << "Enter 4 for Shortest Path (based on Price) point A to Point B\n";
+	cout << "Enter 5 for Shortest Path (based on Hops) point A to Point B\n";
+	cout << "Enter 6 for all travel options for given money amount\n";
+	cout << "Enter 7 to create a new Route between 2 cities\n";
+	cout << "Enter 8 to delete a Route between 2 cities\n";
+	cout << "Enter 9 to quit\n";
+	cout << "*************************************\n";
+}
+
+void nameOfCities(){
+	std::cout << "Cities Offering Flights and Their Corresponding Number:\n";
+	for (int j = 0; j < names.size(); j++) {
+		std::cout << names[j] << " - " << j + 1 << "\n";
+	}
+	std::cout << "\n";
+
+}
+
+void directRoutes(){}
+void mst(){}
+void shortestPathMiles(int source, int destination){}
+void shortestPathPrice(int source, int destination){}
+void shortestPathHops(int source, int destination){} //depth first search
+void tripPriceOptions(int source, double price){}
+void newRoute(int source, int destination, int cost, int distance){}
+void deleteRoute(int source, int destination){}
