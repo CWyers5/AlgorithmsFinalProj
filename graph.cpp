@@ -50,25 +50,71 @@ int main(int argc, char *argv[]) {
 		names.push_back(cityname);
 	}
 
+connections.resize(citynum);
+for (int i = 0; i< connections.size(); i++)
+connections[i].resize(citynum);
+
+distances.resize(citynum);
+for (int i = 0; i< distances.size(); i++)
+distances[i].resize(citynum);
+
+costs.resize(citynum);
+for (int i = 0; i< costs.size(); i++)
+costs[i].resize(citynum);
+
+for (int i = 0; i < citynum; i++){
+	for (int j = 0; j< citynum; j++){
+		distances[i][j] = -1;
+	}
+}
+
+for (int i = 0; i < citynum; i++){
+	for (int j = 0; j< citynum; j++){
+		costs[i][j] = -1;
+	}
+}
+
+std::cout << "HERE" << std::endl;
 
 
 	double firstnum, secondnum, distance, cost;
 	while (myfile2 >> firstnum >> secondnum >> distance >> cost) { //get all values, save to a string
   //read line
 		std::cout << firstnum << " " << secondnum << " " << distance << " " << cost << std::endl;
-		/*connections[firstnum][secondnum] = 1;
-		connections[secondnum][firstnum] = 1;
-		distances[firstnum][secondnum] = distance;
-		distances[secondnum][firstnum] = distance;
-		costs[firstnum][secondnum] = cost;
-		costs[secondnum][firstnum] = cost;
-		*/
+		connections[firstnum-1][secondnum-1] = 1;
+		connections[secondnum-1][firstnum-1] = 1;
+		distances[firstnum-1][secondnum-1] = distance;
+		distances[secondnum-1][firstnum-1] = distance;
+		costs[firstnum-1][secondnum-1] = cost;
+		costs[secondnum-1][firstnum-1] = cost;
+
 
 
 	}
 
+	for (int i = 0; i < citynum; i++){
+		for (int j = 0; j< citynum; j++){
+			std::cout << connections[i][j] << " ";
+		}
+		std::cout << "\n";
+	}
+		std::cout << "\n";
 
+	for (int i = 0; i < citynum; i++){
+		for (int j = 0; j< citynum; j++){
+			std::cout << distances[i][j] << " ";
+		}
+		std::cout << "\n";
+	}
+		std::cout << "\n";
 
+	for (int i = 0; i < citynum; i++){
+		for (int j = 0; j< citynum; j++){
+			std::cout << costs[i][j] << " ";
+		}
+		std::cout << "\n";
+	}
+	std::cout << "\n";
 
 	myfile2.close();
 	std::cout << "NAMES SIZE = " << names.size() << std::endl;
