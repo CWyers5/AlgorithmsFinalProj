@@ -99,8 +99,6 @@ std::cout << "HERE" << std::endl;
 		costs[firstnum-1][secondnum-1] = cost;
 		costs[secondnum-1][firstnum-1] = cost;
 
-
-
 	}
 
 	for (int i = 0; i < citynum; i++){
@@ -133,6 +131,20 @@ std::cout << "HERE" << std::endl;
 		std::cout << names[j] << "\n";
 	}
 	std::cout << "\n";
+
+
+std::cout << "-----------------------------------------------\n";
+std::cout << "|FlightFinder 1.0 by Jared Ford and Clay Wyers|\n";
+std::cout << "-----------------------------------------------\n";
+int input, source, destination;
+/*	while (true) {
+std::cout << " Enter 0 for help\n";
+
+		if (counter == 0) {
+			break;
+		}
+
+	} */
 
 
 	//std::cin >> file;
