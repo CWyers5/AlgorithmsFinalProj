@@ -210,6 +210,10 @@ int main(int argc, char *argv[]) {
 	}
 
 	//std::cin >> file;
+
+
+	//working on Deleting and Adding Routes
+
 	return 0;
 }
 
@@ -244,8 +248,15 @@ void shortestPathMiles(int source, int destination){}
 void shortestPathPrice(int source, int destination){}
 void shortestPathHops(int source, int destination){} //depth first search
 void tripPriceOptions(int source, double price){}
-void newRoute(int source, int destination, int cost, int distance){}
-void deleteRoute(int source, int destination){}
+
+void newRoute(int source, int destination, int cost, int distance){
+
+}
+
+void deleteRoute(int source, int destination){
+
+
+}
 
 void directRoutes() {
 	int maxLen = 0;
