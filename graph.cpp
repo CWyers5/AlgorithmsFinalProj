@@ -12,8 +12,8 @@ std::vector<std::string> names; //for sure
 std::vector<std::vector<int> > connections;
 std::vector<std::vector<int> > costs;
 std::vector<std::vector<int> > distances;
-const std::string ENTER_SOURCE = "Enter Source :";
-const std::string ENTER_DEST = "Enter Destination :";
+const std::string ENTER_SOURCE = "Enter Source: ";
+const std::string ENTER_DEST = "Enter Destination: ";
 
 
 void directRoutes();
@@ -199,9 +199,9 @@ int main(int argc, char *argv[]) {
 			break;
 		case 8:
 			nameOfCities();
+			std::cout << "Deleting a route\n";
 			source = getCity(ENTER_SOURCE);
 			destination = getCity(ENTER_DEST);
-			std::cout << "Deleting a route\n";
 			deleteRoute(source, destination);
 			routesChanged = true;
 			break;
