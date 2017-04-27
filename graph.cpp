@@ -166,21 +166,25 @@ int main(int argc, char *argv[]) {
 			mst();
 			break;
 		case 3:
+			nameOfCities();
 			source = getCity(ENTER_SOURCE);
 			destination = getCity(ENTER_DEST);
 			shortestPathMiles(source, destination);
 			break;
 		case 4:
+			nameOfCities(); //this helps users spell city names
 			source = getCity(ENTER_SOURCE);
 			destination = getCity(ENTER_DEST);
 			shortestPathPrice(source, destination);
 			break;
 		case 5:
+			nameOfCities();
 			source = getCity(ENTER_SOURCE);
 			destination = getCity(ENTER_DEST);
 			shortestPathHops(source, destination);
 			break;
 		case 6:
+			nameOfCities();
 			source = getCity(ENTER_SOURCE);
 			std::cout << "\nEnter Money Amount: ";
 			std::cin >> givenPrice;
@@ -235,6 +239,7 @@ int main(int argc, char *argv[]) {
 		}
 		myfile.close(); //file is written correctly and closed, rewritten files can be reread
 	}
+
 	return 0;
 }
 
@@ -270,9 +275,10 @@ void shortestPathPrice(int source, int destination) {}
 
 
 void shortestPathHops(int source, int destination) {
-
+	bool found = false;
 	std::vector<bool> visited(citynum); //track where I've been
 	std::vector<int> parents(citynum); //track who I came from to form the path
+
 	for (int i = 0; i < visited.size(); i++)
 		visited[i] = false;
 	for (int i = 0; i < parents.size(); i++)
@@ -281,7 +287,6 @@ void shortestPathHops(int source, int destination) {
 	if (source == destination) //duh case
 		std::cout << "Source and Destination are the same, no travel needed\n";
 	else {
-
 		int start = destination; //start at destination so we can work backwards later
 		std::queue<int>  Q;
 		visited[destination] = true;
@@ -290,29 +295,37 @@ void shortestPathHops(int source, int destination) {
 			int current = Q.front(); //current node
 			Q.pop(); //pop it
 			for (int i = 0; i < citynum; i++) {
-
 				if (connections[current][i] == 1 && visited[i] == false) {
 					visited[i] = true;
 					parents[i] = current;
 
-					if (current != source) { //if not source, push to queue
-							//if it is source, than the queue will end up being empty, and we move on
+					if (i == source) { //thought this was current, but its actually i we wanna check
+						found = true; //error handling in the event that there is no path, works
+					}
+					else{ // push to queue
 						Q.push(i);
 					}
 				}
 			}
 		}
+
+	if (found){
 		/*print the path, starting from source and following parents[] which works like a pointer
 		a little shifty, should probably have a check to see if 2 nodes are connected at all.
 		the domestic file is 100% connected, so no chance of issues there. */
 		std::cout << "Shortest Path from " << names[source] << " to " << names[destination] << "\n";
 		int h = source;
+		int totalcost = 0;
 		while (h != destination) {
-			std::cout << names[h] << " -> ";
+			std::cout << names[h] << " -> ($" << costs[h][parents[h]] << ".00) -> ";
+			totalcost += costs[h][parents[h]];
 			h = parents[h];
 		}
-		std::cout << names[destination] << "\n";
+		std::cout << names[destination] << ", 	total cost = $" << totalcost << ".00\n";
 	}
+	else //no path
+	std::cout << "No path found between entered cities\n";
+}
 }
 
 
