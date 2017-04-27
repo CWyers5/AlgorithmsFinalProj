@@ -277,9 +277,48 @@ void shortestPathPrice(int source, int destination){}
 
 void shortestPathHops(int source, int destination){
 
+	std::vector<bool> visited(citynum);
+	std::vector<int> parents(citynum);
+	for (int i = 0; i < visited.size(); i++)
+		visited[i] = false;
+	for (int i = 0; i < parents.size(); i++)
+		parents[i] = -1;
 
+	if (source == destination)
+	  std::cout << "Source and Destination are the same, no travel needed\n";
+	else{
 
+		int start = destination-1; //start at destination so we can work backwards
+	  std::queue<int>  Q;
+		int depthlvl = 0;
+		visited[destination-1] = true;
+	  Q.push(start);
+	while (!Q.empty()){
+		int current = Q.front(); //current node
+		Q.pop(); //pop it
+		depthlvl++;
+		for (int i = 0; i < citynum; i++){
+
+	     if (connections[current][i] == 1 && visited[i] == false){
+					visited[i] = true;
+					parents[i] = current;
+
+	     		if ( current != source-1){
+	      		Q.push(i);
+	     		}
+	   	}
+		}
+	}
+	std::cout << "Shortest Path from " << names[source-1] << " to " << names[destination-1] << "\n";
+	int h = source-1;
+	while (h != destination-1){
+		std::cout << names[h] << " -> ";
+		h = parents[h];
+	}
+	std::cout << names[destination-1] << "\n";
+	}
 }
+
 
 
 void tripPriceOptions(int source, double price){}
