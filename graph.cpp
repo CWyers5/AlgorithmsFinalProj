@@ -10,8 +10,8 @@
 int citynum; //first line of file
 std::vector<std::string> names; //for sure
 std::vector<std::vector<int> > connections;
-std::vector<std::vector<int> > costs;
-std::vector<std::vector<int> > distances;
+std::vector<std::vector<double> > costs;
+std::vector<std::vector<double> > distances;
 const std::string ENTER_SOURCE = "Enter Source: ";
 const std::string ENTER_DEST = "Enter Destination: ";
 
@@ -22,7 +22,7 @@ void shortestPathMiles(int source, int destination);
 void shortestPathPrice(int source, int destination);
 void shortestPathHops(int source, int destination); //breadth first search
 void tripPriceOptions(int source, double price);
-void newRoute(int source, int destination, int cost, int distance);
+void newRoute(int source, int destination, double cost, double distance);
 void deleteRoute(int source, int destination);
 void help();
 void nameOfCities();
@@ -92,7 +92,8 @@ int main(int argc, char *argv[]) {
 	}
 
 
-	double firstnum, secondnum, distance, cost;
+	int firstnum, secondnum;
+	double distance, cost;
 	while (myfile2 >> firstnum >> secondnum >> distance >> cost) { //get all values, save to a string
   //read line
 		//std::cout << firstnum << " " << secondnum << " " << distance << " " << cost << std::endl;
@@ -318,7 +319,7 @@ void shortestPathHops(int source, int destination) {
 
 void tripPriceOptions(int source, double price) {}
 
-void newRoute(int source, int destination, int cost, int distance) {
+void newRoute(int source, int destination, double cost, double distance) {
 	if (connections[source][destination] == 1) {
 		std::cout << "Error: there is already a route here!\n";
 	}
@@ -355,7 +356,7 @@ void directRoutes() {
 	}
 	for (int i = 0; i < names.size(); i++)
 	{
-		for (int j = 0; j < names.size(); j++)
+		for (unsigned int j = 0; j < names.size(); j++)
 		{
 			if (connections[i][j] == 1) {
 				std::cout << std::setw(maxLen) << std::left
@@ -383,4 +384,5 @@ int getCity(std::string prompt) {
 		}
 		std::cout << cityName << " does not exist!\n\n";
 	}
+	return -1;
 }
