@@ -1,5 +1,5 @@
 //Clay Wyers Jared Ford final Proj
-
+#include <queue>
 #include <string>
 #include <vector>
 #include <iostream>
@@ -18,7 +18,7 @@ void directRoutes();
 void mst();
 void shortestPathMiles(int source, int destination);
 void shortestPathPrice(int source, int destination);
-void shortestPathHops(int source, int destination); //depth first search
+void shortestPathHops(int source, int destination); //breadth first search
 void tripPriceOptions(int source, double price);
 void newRoute(int source, int destination, int cost, int distance);
 void deleteRoute(int source, int destination);
@@ -273,7 +273,15 @@ void nameOfCities(){
 void mst(){}
 void shortestPathMiles(int source, int destination){}
 void shortestPathPrice(int source, int destination){}
-void shortestPathHops(int source, int destination){} //depth first search
+
+
+void shortestPathHops(int source, int destination){
+
+
+
+}
+
+
 void tripPriceOptions(int source, double price){}
 
 void newRoute(int source, int destination, int cost, int distance){
