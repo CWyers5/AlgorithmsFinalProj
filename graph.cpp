@@ -220,13 +220,14 @@ int main(int argc, char *argv[]) {
 	}
 
 
-	//This section checks to see if the routes have been modified, and adjusts file accordingly
+	//newRoute() and deleteRoute() change this bool to true, and so we rewrite the file
 if (routesChanged){
+
 	std::ofstream myfile;
   myfile.open (file.c_str());
-	myfile << citynum << std::endl;
+	myfile << citynum << std::endl; //write number of cities
 	for (int i = 0; i < names.size(); i++){
-		myfile << names[i] << std::endl;
+		myfile << names[i] << std::endl; //write the names of cities to file
 	}
 	for (int k = 0; k < citynum; k++){
 		for (int p = k; p < citynum; p++){
@@ -237,7 +238,7 @@ if (routesChanged){
 			}
 		}
 	}
-  myfile.close();
+  myfile.close(); //file is written correctly and closed, rewritten files can be reread
 }
 
 	//std::cin >> file;
@@ -277,38 +278,40 @@ void shortestPathPrice(int source, int destination){}
 
 void shortestPathHops(int source, int destination){
 
-	std::vector<bool> visited(citynum);
-	std::vector<int> parents(citynum);
+	std::vector<bool> visited(citynum); //track where I've been
+	std::vector<int> parents(citynum); //track who I came from to form the path
 	for (int i = 0; i < visited.size(); i++)
 		visited[i] = false;
 	for (int i = 0; i < parents.size(); i++)
 		parents[i] = -1;
 
-	if (source == destination)
+	if (source == destination) //duh case
 	  std::cout << "Source and Destination are the same, no travel needed\n";
 	else{
 
-		int start = destination-1; //start at destination so we can work backwards
+		int start = destination-1; //start at destination so we can work backwards later
 	  std::queue<int>  Q;
-		int depthlvl = 0;
 		visited[destination-1] = true;
 	  Q.push(start);
-	while (!Q.empty()){
+	while (!Q.empty()){ //googled BFS and its pretty standard
 		int current = Q.front(); //current node
 		Q.pop(); //pop it
-		depthlvl++;
 		for (int i = 0; i < citynum; i++){
 
 	     if (connections[current][i] == 1 && visited[i] == false){
 					visited[i] = true;
 					parents[i] = current;
 
-	     		if ( current != source-1){
+	     		if ( current != source-1){ //if not source, push to queue
+						//if it is source, than the queue will end up being empty, and we move on
 	      		Q.push(i);
 	     		}
 	   	}
 		}
 	}
+	/*print the path, starting from source and following parents[] which works like a pointer
+	a little shifty, should probably have a check to see if 2 nodes are connected at all.
+	the domestic file is 100% connected, so no chance of issues there. */
 	std::cout << "Shortest Path from " << names[source-1] << " to " << names[destination-1] << "\n";
 	int h = source-1;
 	while (h != destination-1){
