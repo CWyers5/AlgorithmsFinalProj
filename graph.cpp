@@ -140,6 +140,7 @@ int main(int argc, char *argv[]) {
 	int input, source, destination, givenPrice, givenCost, givenDistance;
 	nameOfCities();
 	bool loop = true;
+	bool routesChanged = false; //only worry about rewriting file if its changed
 	while (loop) {
 		std::cout << "Enter 0 for help\n";
 		std::cout << "Enter Command: ";
@@ -184,6 +185,8 @@ int main(int argc, char *argv[]) {
 			tripPriceOptions(source,givenPrice);
 			break;
 			case 7:
+			nameOfCities();
+			std::cout << "Adding a Route\n";
 			std::cout << "\nEnter Source: ";
 			std::cin >> source;
 			std::cout << "\nEnter Destination: ";
@@ -193,27 +196,51 @@ int main(int argc, char *argv[]) {
 			std::cout << "\nEnter Distance: ";
 			std::cin >> givenDistance;
 			newRoute(source,destination,givenCost,givenDistance);
+			routesChanged = true;
 			break;
 			case 8:
-			std::cout << "\nEnter Source";
+			nameOfCities();
+			std::cout << "Deleting a route\n";
+			std::cout << "\nEnter Source: ";
 			std::cin >> source;
-			std::cout << "\nEnter Destination";
+			std::cout << "\nEnter Destination: ";
 			std::cin >> destination;
 			deleteRoute(source,destination);
+			routesChanged = true;
 			break;
 			case 9:
 			loop = false;
+			break;
+			default:
+			std::cout << "Bad Command Given\n";
 			break;
 
 		}
 
 	}
 
+
+	//This section checks to see if the routes have been modified, and adjusts file accordingly
+if (routesChanged){
+	std::ofstream myfile;
+  myfile.open (file.c_str());
+	myfile << citynum << std::endl;
+	for (int i = 0; i < names.size(); i++){
+		myfile << names[i] << std::endl;
+	}
+	for (int k = 0; k < citynum; k++){
+		for (int p = k; p < citynum; p++){
+			/*routes are listed with lower number first, by starting at i,
+			we avoid listing a route twice, i think */
+			if (connections[k][p] == 1){
+				myfile << k+1 << " " << p+1 << " " << distances[k][p] << " " << costs[k][p] << ".00" << std::endl;
+			}
+		}
+	}
+  myfile.close();
+}
+
 	//std::cin >> file;
-
-
-	//working on Deleting and Adding Routes
-
 	return 0;
 }
 
@@ -250,11 +277,32 @@ void shortestPathHops(int source, int destination){} //depth first search
 void tripPriceOptions(int source, double price){}
 
 void newRoute(int source, int destination, int cost, int distance){
+	if (connections[source-1][destination-1] == 1){
+		std::cout << "Error: there is already a route here!\n";
+	}
+	else {
+		connections[source-1][destination-1] = 1;
+		connections[destination-1][source-1] = 1;
+		costs[source-1][destination-1] = cost;
+		costs[source-1][destination-1] = cost;
+		distances[source-1][destination-1] = distance;
+		distances[destination-1][source-1] = distance;
+	}
 
 }
 
 void deleteRoute(int source, int destination){
-
+	if (connections[source-1][destination-1] == 0){
+		std::cout << "Error: there is no route here to remove\n";
+	}
+	else {
+		connections[source-1][destination-1] = 0;
+		connections[destination-1][source-1] = 0;
+		costs[source-1][destination-1] = -1;
+		costs[source-1][destination-1] = -1;
+		distances[source-1][destination-1] = -1;
+		distances[destination-1][source-1] = -1;
+	}
 
 }
 
