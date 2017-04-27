@@ -12,6 +12,8 @@ std::vector<std::string> names; //for sure
 std::vector<std::vector<int> > connections;
 std::vector<std::vector<int> > costs;
 std::vector<std::vector<int> > distances;
+const std::string ENTER_SOURCE = "Enter Source :";
+const std::string ENTER_DEST = "Enter Destination :";
 
 
 void directRoutes();
@@ -24,6 +26,7 @@ void newRoute(int source, int destination, int cost, int distance);
 void deleteRoute(int source, int destination);
 void help();
 void nameOfCities();
+int getCity(std::string);
 
 
 
@@ -93,12 +96,14 @@ int main(int argc, char *argv[]) {
 	while (myfile2 >> firstnum >> secondnum >> distance >> cost) { //get all values, save to a string
   //read line
 		//std::cout << firstnum << " " << secondnum << " " << distance << " " << cost << std::endl;
-		connections[firstnum - 1][secondnum - 1] = 1;
-		connections[secondnum - 1][firstnum - 1] = 1;
-		distances[firstnum - 1][secondnum - 1] = distance;
-		distances[secondnum - 1][firstnum - 1] = distance;
-		costs[firstnum - 1][secondnum - 1] = cost;
-		costs[secondnum - 1][firstnum - 1] = cost;
+		--firstnum;
+		--secondnum;
+		connections[firstnum][secondnum] = 1;
+		connections[secondnum][firstnum] = 1;
+		distances[firstnum][secondnum] = distance;
+		distances[secondnum][firstnum] = distance;
+		costs[firstnum][secondnum] = cost;
+		costs[secondnum][firstnum] = cost;
 
 	}
 	/*
@@ -140,7 +145,7 @@ int main(int argc, char *argv[]) {
 	std::cout << "-----------------------------------------------\n";
 	std::cout << "|FlightFinder 1.0 by Jared Ford and Clay Wyers|\n";
 	std::cout << "-----------------------------------------------\n";
-	int input, source, destination, givenPrice, givenCost, givenDistance;
+	int input, givenPrice, givenCost, givenDistance, source, destination;
 	nameOfCities();
 	bool loop = true;
 	bool routesChanged = false; //only worry about rewriting file if its changed
@@ -160,29 +165,22 @@ int main(int argc, char *argv[]) {
 			mst();
 			break;
 		case 3:
-			std::cout << "\nEnter Source: ";
-			std::cin >> source;
-			std::cout << "\nEnter Destination: ";
-			std::cin >> destination;
+			source = getCity(ENTER_SOURCE);
+			destination = getCity(ENTER_DEST);
 			shortestPathMiles(source, destination);
 			break;
 		case 4:
-			std::cout << "\nEnter Source: ";
-			std::cin >> source;
-			std::cout << "\nEnter Destination: ";
-			std::cin >> destination;
+			source = getCity(ENTER_SOURCE);
+			destination = getCity(ENTER_DEST);
 			shortestPathPrice(source, destination);
 			break;
 		case 5:
-			std::cout << "\nEnter Source: ";
-			std::cin >> source;
-			std::cout << "\nEnter Destination: ";
-			std::cin >> destination;
+			source = getCity(ENTER_SOURCE);
+			destination = getCity(ENTER_DEST);
 			shortestPathHops(source, destination);
 			break;
 		case 6:
-			std::cout << "\nEnter Source: ";
-			std::cin >> source;
+			source = getCity(ENTER_SOURCE);
 			std::cout << "\nEnter Money Amount: ";
 			std::cin >> givenPrice;
 			tripPriceOptions(source, givenPrice);
@@ -190,10 +188,8 @@ int main(int argc, char *argv[]) {
 		case 7:
 			nameOfCities();
 			std::cout << "Adding a Route\n";
-			std::cout << "\nEnter Source: ";
-			std::cin >> source;
-			std::cout << "\nEnter Destination: ";
-			std::cin >> destination;
+			source = getCity(ENTER_SOURCE);
+			destination = getCity(ENTER_DEST);
 			std::cout << "\nEnter Cost: ";
 			std::cin >> givenCost;
 			std::cout << "\nEnter Distance: ";
@@ -203,11 +199,9 @@ int main(int argc, char *argv[]) {
 			break;
 		case 8:
 			nameOfCities();
+			source = getCity(ENTER_SOURCE);
+			destination = getCity(ENTER_DEST);
 			std::cout << "Deleting a route\n";
-			std::cout << "\nEnter Source: ";
-			std::cin >> source;
-			std::cout << "\nEnter Destination: ";
-			std::cin >> destination;
 			deleteRoute(source, destination);
 			routesChanged = true;
 			break;
@@ -260,9 +254,9 @@ void help() {
 }
 
 void nameOfCities() {
-	std::cout << "Cities Offering Flights and Their Corresponding Number:\n";
+	std::cout << "Cities Offering Flights:\n";
 	for (int j = 0; j < names.size(); j++) {
-		std::cout << names[j] << " - " << j + 1 << "\n";
+		std::cout << names[j] << "\n";
 	}
 	std::cout << "\n";
 
@@ -287,9 +281,9 @@ void shortestPathHops(int source, int destination) {
 		std::cout << "Source and Destination are the same, no travel needed\n";
 	else {
 
-		int start = destination - 1; //start at destination so we can work backwards later
+		int start = destination; //start at destination so we can work backwards later
 		std::queue<int>  Q;
-		visited[destination - 1] = true;
+		visited[destination] = true;
 		Q.push(start);
 		while (!Q.empty()) { //googled BFS and its pretty standard
 			int current = Q.front(); //current node
@@ -300,7 +294,7 @@ void shortestPathHops(int source, int destination) {
 					visited[i] = true;
 					parents[i] = current;
 
-					if (current != source - 1) { //if not source, push to queue
+					if (current != source) { //if not source, push to queue
 							//if it is source, than the queue will end up being empty, and we move on
 						Q.push(i);
 					}
@@ -310,13 +304,13 @@ void shortestPathHops(int source, int destination) {
 		/*print the path, starting from source and following parents[] which works like a pointer
 		a little shifty, should probably have a check to see if 2 nodes are connected at all.
 		the domestic file is 100% connected, so no chance of issues there. */
-		std::cout << "Shortest Path from " << names[source - 1] << " to " << names[destination - 1] << "\n";
-		int h = source - 1;
-		while (h != destination - 1) {
+		std::cout << "Shortest Path from " << names[source] << " to " << names[destination] << "\n";
+		int h = source;
+		while (h != destination) {
 			std::cout << names[h] << " -> ";
 			h = parents[h];
 		}
-		std::cout << names[destination - 1] << "\n";
+		std::cout << names[destination] << "\n";
 	}
 }
 
@@ -325,31 +319,31 @@ void shortestPathHops(int source, int destination) {
 void tripPriceOptions(int source, double price) {}
 
 void newRoute(int source, int destination, int cost, int distance) {
-	if (connections[source - 1][destination - 1] == 1) {
+	if (connections[source][destination] == 1) {
 		std::cout << "Error: there is already a route here!\n";
 	}
 	else {
-		connections[source - 1][destination - 1] = 1;
-		connections[destination - 1][source - 1] = 1;
-		costs[source - 1][destination - 1] = cost;
-		costs[source - 1][destination - 1] = cost;
-		distances[source - 1][destination - 1] = distance;
-		distances[destination - 1][source - 1] = distance;
+		connections[source][destination] = 1;
+		connections[destination][source] = 1;
+		costs[source][destination] = cost;
+		costs[source][destination] = cost;
+		distances[source][destination] = distance;
+		distances[destination][source] = distance;
 	}
 
 }
 
 void deleteRoute(int source, int destination) {
-	if (connections[source - 1][destination - 1] == 0) {
+	if (connections[source][destination] == 0) {
 		std::cout << "Error: there is no route here to remove\n";
 	}
 	else {
-		connections[source - 1][destination - 1] = 0;
-		connections[destination - 1][source - 1] = 0;
-		costs[source - 1][destination - 1] = -1;
-		costs[source - 1][destination - 1] = -1;
-		distances[source - 1][destination - 1] = -1;
-		distances[destination - 1][source - 1] = -1;
+		connections[source][destination] = 0;
+		connections[destination][source] = 0;
+		costs[source][destination] = -1;
+		costs[source][destination] = -1;
+		distances[source][destination] = -1;
+		distances[destination][source] = -1;
 	}
 
 }
@@ -372,5 +366,21 @@ void directRoutes() {
 					<< costs[i][j] << " mi\n";
 			}
 		}
+	}
+}
+
+int getCity(std::string prompt) {
+	std::string cityName;
+	bool error = true;
+	while (error) {
+		std::cout << prompt;
+		std::cin >> cityName;
+		for (int i = 0; i < names.size(); i++)
+		{
+			if (names[i] == cityName) {
+				return i;
+			}
+		}
+		std::cout << cityName << " does not exist!\n\n";
 	}
 }
