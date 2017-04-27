@@ -270,6 +270,8 @@ void nameOfCities() {
 
 
 void mst() {}
+
+//gonna work on the other 2 shortest paths, once I get 1 the other should be easy
 void shortestPathMiles(int source, int destination) {}
 void shortestPathPrice(int source, int destination) {}
 
@@ -329,7 +331,7 @@ void shortestPathHops(int source, int destination) {
 }
 
 
-
+//needs implemented
 void tripPriceOptions(int source, double price) {}
 
 void newRoute(int source, int destination, double cost, double distance) {
