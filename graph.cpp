@@ -7,7 +7,7 @@
 #include <cstdlib>
 #include <iomanip>
 
-#define INFINITE 999999; //larger than any distance we will use
+//#define INFINITE 999999; //larger than any distance we will use
 
 int citynum; //first line of file
 std::vector<std::string> names; //for sure
@@ -16,10 +16,12 @@ std::vector<std::vector<double> > costs;
 std::vector<std::vector<double> > distances;
 const std::string ENTER_SOURCE = "Enter Source: ";
 const std::string ENTER_DEST = "Enter Destination: ";
+const int INFINITE = 999999;
 
 
 void directRoutes();
 void mst();
+int minKey(std::vector<int>, std::vector<bool>, int);
 void shortestPathMiles(int source, int destination);
 void shortestPathPrice(int source, int destination);
 void shortestPathHops(int source, int destination); //breadth first search
@@ -270,11 +272,6 @@ void nameOfCities() {
 
 }
 
-
-void mst() {}
-
-
-
 //helps find minimum weight in shortestPathMiles and shortestPathPrice
 int minWeight(std::vector<int> dist, std::vector<bool> visited) {
 	// Initialize min value
@@ -506,4 +503,47 @@ int getCity(std::string prompt) {
 		std::cout << cityName << " does not exist!\n\n";
 	}
 	return -1;
+}
+
+void mst() {
+	int size = distances.size();
+	std::vector<int> parent;
+	std::vector<int> key;
+	std::vector<bool> mstSet;
+	/* Initialize all weights as infinite */
+	for (int i = 0; i < size; i++)
+	{
+		key.push_back(INFINITE);
+		mstSet.push_back(false);
+		parent.push_back(0);
+	}
+	key[0] = 0;
+	parent[0] = -1;
+
+	for (int i = 0; i < size - 1; i++)
+	{
+		int minimumKey = minKey(key, mstSet, size);
+		mstSet[minimumKey] = true;
+		for (int j = 0; j < size; j++)
+			// graph[u][v] is non zero only for adjacent vertices of m
+			// mstSet[v] is false for vertices not yet included in MST
+			// Update the key only if graph[u][v] is smaller than key[v]
+			if (distances[minimumKey][j] && mstSet[j] == false && distances[minimumKey][j] <  key[j])
+				parent[j] = minimumKey, key[j] = distances[minimumKey][j];
+	}
+	std::cout << "Edge   Weight\n";
+	for (int i = 1; i < size; i++)
+		std::cout << parent[i] << " " << i << " " << "   " << distances[i][parent[i]] << std::endl;
+}
+
+int minKey(std::vector<int> key, std::vector<bool> mstSet, int size)
+{
+	int min = INFINITE;
+	int min_index;
+
+	for (int v = 0; v < size; v++)
+		if (mstSet[v] == false && key[v] < min)
+			min = key[v], min_index = v;
+
+	return min_index;
 }
