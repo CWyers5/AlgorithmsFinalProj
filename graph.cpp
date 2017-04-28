@@ -515,7 +515,7 @@ void mst() {
 	{
 		key.push_back(INFINITE);
 		mstSet.push_back(false);
-		parent.push_back(0);
+		parent.push_back(-1);
 	}
 	key[0] = 0;
 	parent[0] = -1;
@@ -528,12 +528,15 @@ void mst() {
 			// graph[u][v] is non zero only for adjacent vertices of m
 			// mstSet[v] is false for vertices not yet included in MST
 			// Update the key only if graph[u][v] is smaller than key[v]
-			if (distances[minimumKey][j] && mstSet[j] == false && distances[minimumKey][j] <  key[j])
+			if (distances[minimumKey][j] && mstSet[j] == false && distances[minimumKey][j] < key[j])
 				parent[j] = minimumKey, key[j] = distances[minimumKey][j];
 	}
 	std::cout << "Edge   Weight\n";
-	for (int i = 1; i < size; i++)
-		std::cout << parent[i] << " " << i << " " << "   " << distances[i][parent[i]] << std::endl;
+	for (int i = 1; i < size; i++) {
+		if (parent[i] != -1) {
+			std::cout << parent[i] << " - " << i << "   " << distances[i][parent[i]] << std::endl;
+		}
+	}
 }
 
 int minKey(std::vector<int> key, std::vector<bool> mstSet, int size)
