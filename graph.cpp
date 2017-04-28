@@ -7,6 +7,8 @@
 #include <cstdlib>
 #include <iomanip>
 
+#define INFINITE 999999; //larger than any distance we will use
+
 int citynum; //first line of file
 std::vector<std::string> names; //for sure
 std::vector<std::vector<int> > connections;
@@ -81,7 +83,7 @@ int main(int argc, char *argv[]) {
 
 	for (int i = 0; i < citynum; i++) {
 		for (int j = 0; j < citynum; j++) {
-			distances[i][j] = -1;
+			distances[i][j] = INFINITE;
 		}
 	}
 
@@ -271,8 +273,91 @@ void nameOfCities() {
 
 void mst() {}
 
+
+
+// A utility function to find the vertex with minimum distance
+// value, from the set of vertices not yet included in shortest
+// path tree
+int minDistance(std::vector<int> dist, std::vector<bool> sptSet)
+{
+		// Initialize min value
+		int min = INFINITE;
+		int min_index;
+
+		for (int v = 0; v < citynum; v++)
+				if (sptSet[v] == false && dist[v] <= min)
+						min = dist[v], min_index = v;
+
+		return min_index;
+}
+
 //gonna work on the other 2 shortest paths, once I get 1 the other should be easy
-void shortestPathMiles(int source, int destination) {}
+void shortestPathMiles(int source, int destination) {
+
+	    std::vector<int> dist(citynum);  // The output array. dist[i] will hold
+	                  // the shortest distance from src to i
+
+	    // sptSet[i] will true if vertex i is included / in shortest
+	    // path tree or shortest distance from src to i is finalized
+	    std::vector<bool> sptSet(citynum);
+
+	    // Parent array to store shortest path tree
+	    std::vector<int> parent(citynum);
+			parent[source] = -1;
+
+	    // Initialize all distances as INFINITE and stpSet[] as false
+	    for (int i = 0; i < citynum; i++)
+	    {
+	        parent[source] = -1;
+	        dist[i] = INFINITE;
+	        sptSet[i] = false;
+	    }
+
+	    // Distance of source vertex from itself is always 0
+	    dist[source] = 0;
+
+	    // Find shortest path for all vertices
+	    for (int count = 0; count < citynum-1; count++)
+	    {
+	        // Pick the minimum distance vertex from the set of
+	        // vertices not yet processed. u is always equal to src
+	        // in first iteration.
+	        int u = minDistance(dist, sptSet);
+
+	        // Mark the picked vertex as processed
+	        sptSet[u] = true;
+
+	        // Update dist value of the adjacent vertices of the
+	        // picked vertex.
+	        for (int v = 0; v < citynum; v++)
+
+	            // Update dist[v] only if is not in sptSet, there is
+	            // an edge from u to v, and total weight of path from
+	            // src to v through u is smaller than current value of
+	            // dist[v]
+	            if (!sptSet[v] && distances[u][v] &&
+	                dist[u] + distances[u][v] < dist[v])
+	            {
+	                parent[v]  = u;
+	                dist[v] = dist[u] + distances[u][v];
+	            }
+	    }
+			std::cout << "Shortest Path from " << names[source] << " to " << names[destination] << " (Minimum Distance)\n";
+			int h = source;
+			int totalcost = 0;
+
+			while (h != destination && h != -1) {
+				std::cout << "h = " << h << "\n";
+				std::cout << "parent[h] = " << parent[h] << "\n";
+				std::cout << names[h] << " -> ($" << costs[h][parent[h]+1] <<  ") -> ";
+
+				totalcost += costs[h][parent[h]+1];
+				h = parent[h];
+			}
+			std::cout << names[destination] << ", total cost = $" << totalcost << ".00\n";
+			//printSolution(dist,parent,source,destination);
+	}
+
 void shortestPathPrice(int source, int destination) {}
 
 
