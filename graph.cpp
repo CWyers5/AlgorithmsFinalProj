@@ -7,7 +7,7 @@
 #include <cstdlib>
 #include <iomanip>
 
-#define INFINITE 999999; //larger than any distance we will use
+//#define INFINITE 999999; //larger than any distance we will use
 
 int citynum; //first line of file
 std::vector<std::string> names; //for sure
@@ -16,10 +16,12 @@ std::vector<std::vector<double> > costs;
 std::vector<std::vector<double> > distances;
 const std::string ENTER_SOURCE = "Enter Source: ";
 const std::string ENTER_DEST = "Enter Destination: ";
+const int INFINITE = 999999;
 
 
 void directRoutes();
-void mst();
+void mst(int);
+int minKey(std::vector<int>, std::vector<bool>, int, int);
 void shortestPathMiles(int source, int destination);
 void shortestPathPrice(int source, int destination);
 void shortestPathHops(int source, int destination); //breadth first search
@@ -165,7 +167,7 @@ int main(int argc, char *argv[]) {
 			directRoutes();
 			break;
 		case 2:
-			mst();
+			mst(0);
 			break;
 		case 3:
 			nameOfCities();
@@ -269,11 +271,6 @@ void nameOfCities() {
 	std::cout << "\n";
 
 }
-
-
-void mst() {}
-
-
 
 //helps find minimum weight in shortestPathMiles and shortestPathPrice
 int minWeight(std::vector<int> dist, std::vector<bool> visited) {
@@ -506,4 +503,54 @@ int getCity(std::string prompt) {
 		std::cout << cityName << " does not exist!\n\n";
 	}
 	return -1;
+}
+
+void mst(int start) {
+	int size = distances.size();
+	std::vector<int> parent;
+	std::vector<int> key;
+	std::vector<bool> mstSet;
+	/* Initialize all weights as infinite */
+	for (int i = 0; i < size; i++)
+	{
+		key.push_back(INFINITE);
+		mstSet.push_back(false);
+		parent.push_back(-1);
+	}
+	key[start] = 0;
+	parent[start] = -1;
+
+	for (int i = start; i < size - 1; i++)
+	{
+		int minimumKey = minKey(key, mstSet, size, start);
+		if (minimumKey == -1) {
+			std::cout << "New Minimum Spanning tree\n";
+			mst(i);
+		}
+		else {
+			mstSet[minimumKey] = true;
+			for (int j = start; j < size; j++)
+				if (distances[minimumKey][j] && mstSet[j] == false && distances[minimumKey][j] < key[j])
+					parent[j] = minimumKey, key[j] = distances[minimumKey][j];
+		}
+	}
+	std::cout << "Edge   Weight\n";
+	for (int i = 1; i < size; i++) {
+		if (parent[i] != -1) {
+			std::cout << parent[i] << " - " << i << "   " << distances[i][parent[i]] << std::endl;
+		}
+	}
+}
+
+int minKey(std::vector<int> key, std::vector<bool> mstSet, int size, int start)
+{
+	int min = INFINITE;
+	int min_index = -1;
+
+	for (int v = start; v < size; v++)
+		if (mstSet[v] == false && key[v] < min) {
+			min = key[v];
+			min_index = v;
+		}
+	return min_index;
 }
