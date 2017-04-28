@@ -246,19 +246,19 @@ int main(int argc, char *argv[]) {
 }
 
 void help() {
-	using namespace std;
-	cout << "************************************\n";
-	cout << "             HELP MENU               \n";
-	cout << "Enter 1 to Display Direct Routes\n";
-	cout << "Enter 2 for Minimum Spanning Tree\n";
-	cout << "Enter 3 for Shortest Path (based on Miles) point A to Point B\n";
-	cout << "Enter 4 for Shortest Path (based on Price) point A to Point B\n";
-	cout << "Enter 5 for Shortest Path (based on Hops) point A to Point B\n";
-	cout << "Enter 6 for all travel options for given money amount\n";
-	cout << "Enter 7 to create a new Route between 2 cities\n";
-	cout << "Enter 8 to delete a Route between 2 cities\n";
-	cout << "Enter 9 to quit\n";
-	cout << "*************************************\n";
+	std::cout
+		<< "************************************\n"
+		<< "             HELP MENU               \n"
+		<< "Enter 1 to Display Direct Routes\n"
+		<< "Enter 2 for Minimum Spanning Tree\n"
+		<< "Enter 3 for Shortest Path (based on Miles) point A to Point B\n"
+		<< "Enter 4 for Shortest Path (based on Price) point A to Point B\n"
+		<< "Enter 5 for Shortest Path (based on Hops) point A to Point B\n"
+		<< "Enter 6 for all travel options for given money amount\n"
+		<< "Enter 7 to create a new Route between 2 cities\n"
+		<< "Enter 8 to delete a Route between 2 cities\n"
+		<< "Enter 9 to quit\n"
+		<< "*************************************\n";
 }
 
 void nameOfCities() {
@@ -276,16 +276,16 @@ void mst() {}
 
 
 //helps find minimum weight in shortestPathMiles and shortestPathPrice
-int minWeight(std::vector<int> dist, std::vector<bool> visited){
-		// Initialize min value
-		int min = INFINITE;
-		int min_index;
+int minWeight(std::vector<int> dist, std::vector<bool> visited) {
+	// Initialize min value
+	int min = INFINITE;
+	int min_index;
 
-		for (int v = 0; v < citynum; v++){
-				if (visited[v] == false && dist[v] <= min)
-						min = dist[v], min_index = v;
-		}
-		return min_index;
+	for (int v = 0; v < citynum; v++) {
+		if (visited[v] == false && dist[v] <= min)
+			min = dist[v], min_index = v;
+	}
+	return min_index;
 }
 
 void shortestPathMiles(int source, int destination) {
@@ -294,38 +294,38 @@ void shortestPathMiles(int source, int destination) {
 	std::vector<bool> visited(citynum); //tracks if a vertex is in the path
 	std::vector<int> parent(citynum);// Parent array to store shortest path tree
 	// prepare vectors as essentially 'empty'
-	for (int i = 0; i < citynum; i++){
-	    dist[i] = INFINITE; //a huge value, used to help comparisons
-	    visited[i] = false;
-			parent[i] = -1;
+	for (int i = 0; i < citynum; i++) {
+		dist[i] = INFINITE; //a huge value, used to help comparisons
+		visited[i] = false;
+		parent[i] = -1;
 	}
-    // Distance of source vertex from itself is always 0
-  dist[destination] = 0;
-    // Find shortest path for all vertices
-  for (int count = 0; count < citynum-1; count++){
-    //find minimum distance of vertices we haven't been to
-    int u = minWeight(dist, visited);
-    // visited the vertex
-    visited[u] = true;
-    // Update dist value of the adjacent vertices of the picked vertex
+	// Distance of source vertex from itself is always 0
+	dist[destination] = 0;
+	// Find shortest path for all vertices
+	for (int count = 0; count < citynum - 1; count++) {
+		//find minimum distance of vertices we haven't been to
+		int u = minWeight(dist, visited);
+		// visited the vertex
+		visited[u] = true;
+		// Update dist value of the adjacent vertices of the picked vertex
 
-    for (int v = 0; v < citynum; v++)
-    	/* Update dist[v] only if not visited, there is
-      an edge, and total distance of path from
-       source to v through u is smaller than current value */
-      if (!visited[v] && distances[u][v] &&
-          dist[u] + distances[u][v] < dist[v])
-      {
-          parent[v]  = u;
-          dist[v] = dist[u] + distances[u][v];
-      }
-  }
-	if (visited[destination] == true && visited[source] == true){ //checks if there is a path from destination to source
+		for (int v = 0; v < citynum; v++)
+			/* Update dist[v] only if not visited, there is
+		  an edge, and total distance of path from
+		   source to v through u is smaller than current value */
+			if (!visited[v] && distances[u][v] &&
+				dist[u] + distances[u][v] < dist[v])
+			{
+				parent[v] = u;
+				dist[v] = dist[u] + distances[u][v];
+			}
+	}
+	if (visited[destination] == true && visited[source] == true) { //checks if there is a path from destination to source
 		std::cout << "Shortest Path from " << names[source] << " to " << names[destination] << " (Minimum Distance)\n";
 		int h = source;
 		int totalcost = 0;
-		while ( h != destination && h != -1) {
-			std::cout << names[h] << " -> ($" << costs[h][parent[h]] <<  ") -> ";
+		while (h != destination && h != -1) {
+			std::cout << names[h] << " -> ($" << costs[h][parent[h]] << ") -> ";
 			totalcost += costs[h][parent[h]];
 			h = parent[h];
 		}
@@ -333,7 +333,7 @@ void shortestPathMiles(int source, int destination) {
 	}
 	else
 		std::cout << "No Direct Path Avaliable\n";
-	}
+}
 
 
 void shortestPathPrice(int source, int destination) {
@@ -341,15 +341,15 @@ void shortestPathPrice(int source, int destination) {
 	std::vector<bool> visited(citynum); //tracks if a vertex is in the path
 	std::vector<int> parent(citynum);// Parent array to store shortest path tree
 	// prepare vectors as essentially 'empty'
-	for (int i = 0; i < citynum; i++){
-			dist[i] = INFINITE; //a huge value, used to help comparisons
-			visited[i] = false;
-			parent[i] = -1;
+	for (int i = 0; i < citynum; i++) {
+		dist[i] = INFINITE; //a huge value, used to help comparisons
+		visited[i] = false;
+		parent[i] = -1;
 	}
-		// Distance of source vertex from itself is always 0
+	// Distance of source vertex from itself is always 0
 	dist[destination] = 0;
-		// Find shortest path for all vertices
-	for (int count = 0; count < citynum-1; count++){
+	// Find shortest path for all vertices
+	for (int count = 0; count < citynum - 1; count++) {
 		//find minimum distance of vertices we haven't been to
 		int u = minWeight(dist, visited);
 		// visited the vertex
@@ -361,18 +361,18 @@ void shortestPathPrice(int source, int destination) {
 			an edge, and total distance of path from
 			 source to v through u is smaller than current value */
 			if (!visited[v] && costs[u][v] &&
-					dist[u] + costs[u][v] < dist[v])
+				dist[u] + costs[u][v] < dist[v])
 			{
-					parent[v]  = u;
-					dist[v] = dist[u] + costs[u][v];
+				parent[v] = u;
+				dist[v] = dist[u] + costs[u][v];
 			}
 	}
-	if (visited[destination] == true && visited[source] == true){ //checks if there is a path from destination to source
+	if (visited[destination] == true && visited[source] == true) { //checks if there is a path from destination to source
 		std::cout << "Shortest Path from " << names[source] << " to " << names[destination] << " (Minimum Distance)\n";
 		int h = source;
 		int totalcost = 0;
-		while ( h != destination && h != -1) {
-			std::cout << names[h] << " -> ($" << costs[h][parent[h]] <<  ") -> ";
+		while (h != destination && h != -1) {
+			std::cout << names[h] << " -> ($" << costs[h][parent[h]] << ") -> ";
 			totalcost += costs[h][parent[h]];
 			h = parent[h];
 		}
@@ -380,7 +380,7 @@ void shortestPathPrice(int source, int destination) {
 	}
 	else
 		std::cout << "No Direct Path Avaliable\n";
-	}
+}
 
 void shortestPathHops(int source, int destination) {
 	bool found = false;
@@ -410,30 +410,30 @@ void shortestPathHops(int source, int destination) {
 					if (i == source) { //thought this was current, but its actually i we wanna check
 						found = true; //error handling in the event that there is no path, works
 					}
-					else{ // push to queue
+					else { // push to queue
 						Q.push(i);
 					}
 				}
 			}
 		}
 
-	if (found){
-		/*print the path, starting from source and following parents[] which works like a pointer
-		a little shifty, should probably have a check to see if 2 nodes are connected at all.
-		the domestic file is 100% connected, so no chance of issues there. */
-		std::cout << "Shortest Path from " << names[source] << " to " << names[destination] << "\n";
-		int h = source;
-		int totalcost = 0;
-		while (h != destination) {
-			std::cout << names[h] << " -> ($" << costs[h][parents[h]] << ".00) -> ";
-			totalcost += costs[h][parents[h]];
-			h = parents[h];
+		if (found) {
+			/*print the path, starting from source and following parents[] which works like a pointer
+			a little shifty, should probably have a check to see if 2 nodes are connected at all.
+			the domestic file is 100% connected, so no chance of issues there. */
+			std::cout << "Shortest Path from " << names[source] << " to " << names[destination] << "\n";
+			int h = source;
+			int totalcost = 0;
+			while (h != destination) {
+				std::cout << names[h] << " -> ($" << costs[h][parents[h]] << ".00) -> ";
+				totalcost += costs[h][parents[h]];
+				h = parents[h];
+			}
+			std::cout << names[destination] << ", 	total cost = $" << totalcost << ".00\n";
 		}
-		std::cout << names[destination] << ", 	total cost = $" << totalcost << ".00\n";
+		else //no path
+			std::cout << "No path found between entered cities\n";
 	}
-	else //no path
-	std::cout << "No path found between entered cities\n";
-}
 }
 
 
