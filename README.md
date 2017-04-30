@@ -9,7 +9,7 @@ Tasks:
 4. Shortest Path Total Miles from A to B
 5. Shortest Path Based on Price from A to B
 6. Shortest Path Based on hops from A to B -- DONE
-7. Trip Options Based on Total Price
+7. Trip Options Based on Total Price -- WORK IN PROGRESS
 8. Add New Route, Delete Route, Quit Program. -- DONE
 
 
