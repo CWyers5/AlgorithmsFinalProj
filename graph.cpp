@@ -167,6 +167,7 @@ int main(int argc, char *argv[]) {
 			directRoutes();
 			break;
 		case 2:
+			std::cout << std::endl;
 			mst(0);
 			break;
 		case 3:
@@ -376,7 +377,7 @@ void shortestPathPrice(int source, int destination) {
 		std::cout << names[destination] << ", total cost = $" << totalcost << ".00\n";
 	}
 	else
-		std::cout << "No Direct Path Avaliable\n";
+		std::cout << "No Direct Path Available\n";
 }
 
 void shortestPathHops(int source, int destination) {
@@ -506,6 +507,10 @@ int getCity(std::string prompt) {
 }
 
 void mst(int start) {
+	int maxLen = 0;
+	for (std::string s : names) {
+		maxLen = s.length() > maxLen ? s.length() : maxLen;
+	}
 	int size = distances.size();
 	std::vector<int> parent;
 	std::vector<int> key;
@@ -524,13 +529,13 @@ void mst(int start) {
 	{
 		int minimumKey = minKey(key, mstSet, size, start);
 		if (minimumKey == -1) {
-			std::cout << "Edge   Weight\n";
+			std::cout << std::left << std::setw(2 * maxLen) << "Edge" << "       Distance\n\n";
 			for (int i = 1; i < size; i++) {
 				if (parent[i] != -1) {
-					std::cout << parent[i] << " - " << i << "   " << distances[i][parent[i]] << std::endl;
+					std::cout << std::left << std::setw(maxLen) << names[parent[i]] << " -> " << std::left << std::setw(maxLen) << names[i] << "   " << distances[i][parent[i]] << std::endl;
 				}
 			}
-			std::cout << "New Minimum Spanning tree\n";
+			std::cout << "\nNew Minimum Spanning tree\n\n";
 			mst(i);
 			return;
 		}
@@ -541,10 +546,10 @@ void mst(int start) {
 					parent[j] = minimumKey, key[j] = distances[minimumKey][j];
 		}
 	}
-	std::cout << "Edge   Weight\n";
+	std::cout << std::left << std::setw(2*maxLen) << "Edge" << "       Distance\n\n";
 	for (int i = 1; i < size; i++) {
 		if (parent[i] != -1) {
-			std::cout << parent[i] << " - " << i << "   " << distances[i][parent[i]] << std::endl;
+			std::cout << std::left << std::setw(maxLen) << names[parent[i]] << " -> " << std::left << std::setw(maxLen) << names[i] << "   " << distances[i][parent[i]] << std::endl;
 		}
 	}
 }
