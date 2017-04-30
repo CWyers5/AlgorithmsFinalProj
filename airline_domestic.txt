@@ -1,4 +1,4 @@
-13
+14
 Cleveland
 Columbus
 Akron
@@ -12,7 +12,9 @@ No
 Yes
 Hello
 Goodbye
+Unconnected node
 1 2 127 200.00
+2 3 222 500.00
 1 4 66 125.00
 1 5 205 125.00
 1 6 306 550.00

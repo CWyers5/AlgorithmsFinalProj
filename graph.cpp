@@ -25,7 +25,7 @@ int minKey(std::vector<int>, std::vector<bool>, int, int);
 void shortestPathMiles(int source, int destination);
 void shortestPathPrice(int source, int destination);
 void shortestPathHops(int source, int destination); //breadth first search
-void tripPriceOptions(int source, double price);
+void tripPriceOptions(int,double,std::string);
 void newRoute(int source, int destination, double cost, double distance);
 void deleteRoute(int source, int destination);
 void help();
@@ -190,10 +190,9 @@ int main(int argc, char *argv[]) {
 			break;
 		case 6:
 			nameOfCities();
-			source = getCity(ENTER_SOURCE);
 			std::cout << "\nEnter Money Amount: ";
 			std::cin >> givenPrice;
-			tripPriceOptions(source, givenPrice);
+			tripPriceOptions(0, givenPrice,""); // We always start from the first city
 			break;
 		case 7:
 			nameOfCities();
@@ -434,8 +433,19 @@ void shortestPathHops(int source, int destination) {
 	}
 }
 
-void tripPriceOptions(int source, double price) {
-	// Working on this
+void tripPriceOptions(int source, double budget, std::string visited) {
+	visited += std::to_string(source);
+	visited += ',';
+	for (int i = 0; i < names.size(); i++) {
+		double cost = costs[source][i];
+		std::string temp = std::to_string(i);
+		temp += ',';
+		if (cost <= budget && connections[source][i] != 0 && visited.find(temp) == -1) {
+			std::cout << source+1 << " -> ($" << cost << ") " << i+1 << ", ";
+			tripPriceOptions(i, budget - cost, visited);
+			std::cout << std::endl;
+		}
+	}
 }
 
 void newRoute(int source, int destination, double cost, double distance) {
@@ -546,7 +556,7 @@ void mst(int start) {
 					parent[j] = minimumKey, key[j] = distances[minimumKey][j];
 		}
 	}
-	std::cout << std::left << std::setw(2*maxLen) << "Edge" << "       Distance\n\n";
+	std::cout << std::left << std::setw(2 * maxLen) << "Edge" << "       Distance\n\n";
 	for (int i = 1; i < size; i++) {
 		if (parent[i] != -1) {
 			std::cout << std::left << std::setw(maxLen) << names[parent[i]] << " -> " << std::left << std::setw(maxLen) << names[i] << "   " << distances[i][parent[i]] << std::endl;
