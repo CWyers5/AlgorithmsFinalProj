@@ -434,9 +434,9 @@ void shortestPathHops(int source, int destination) {
 	}
 }
 
-
-//needs implemented
-void tripPriceOptions(int source, double price) {}
+void tripPriceOptions(int source, double price) {
+	// Working on this
+}
 
 void newRoute(int source, int destination, double cost, double distance) {
 	if (connections[source][destination] == 1) {
