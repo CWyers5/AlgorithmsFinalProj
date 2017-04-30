@@ -524,8 +524,15 @@ void mst(int start) {
 	{
 		int minimumKey = minKey(key, mstSet, size, start);
 		if (minimumKey == -1) {
+			std::cout << "Edge   Weight\n";
+			for (int i = 1; i < size; i++) {
+				if (parent[i] != -1) {
+					std::cout << parent[i] << " - " << i << "   " << distances[i][parent[i]] << std::endl;
+				}
+			}
 			std::cout << "New Minimum Spanning tree\n";
 			mst(i);
+			return;
 		}
 		else {
 			mstSet[minimumKey] = true;
