@@ -99,7 +99,7 @@ int main(int argc, char *argv[]) {
 	std::cout << "-----------------------------------------------\n";
 	std::cout << "|FlightFinder 1.0 by Jared Ford and Clay Wyers|\n";
 	std::cout << "-----------------------------------------------\n";
-	int  givenPrice, givenCost, givenDistance, source, destination;
+	double  givenPrice, givenCost, givenDistance, source, destination;
 	char input;
 	nameOfCities();
 	bool loop = true;
@@ -282,7 +282,7 @@ void shortestPathMiles(int source, int destination) {
 			totalcost += costs[h][parent[h]];
 			h = parent[h];
 		}
-		std::cout << names[destination] << ", total cost = $" << totalcost << ".00\n";
+		std::cout << names[destination] << ", total cost = $" << totalcost << "\n";
 	}
 
 }
@@ -420,7 +420,7 @@ void newRoute(int source, int destination, double cost, double distance) {
 		connections[source][destination] = 1;
 		connections[destination][source] = 1;
 		costs[source][destination] = cost;
-		costs[source][destination] = cost;
+		costs[destination][source] = cost;
 		distances[source][destination] = distance;
 		distances[destination][source] = distance;
 	}
