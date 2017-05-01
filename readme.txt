@@ -9,19 +9,17 @@ Next, each city name is listed,
 Finally, all the flight data is listed
 
 The program then takes all this data, parses it into several adjacency matrixes and performs calculations
-Upon 
-Tasks:
 
-1. Read File, Create Adjacency Matrix -- DONE
-1a. Add Menu, Help, etc. -- DONE
-2. Show Direct Routes, distances, and prices -- DONE
-3. Minimum Spanning Tree (Prims or Kruskals) -- DONE
-4. Shortest Path Total Miles from A to B -- DONE
-5. Shortest Path Based on Price from A to B -- DONE
-6. Shortest Path Based on hops from A to B -- DONE
-7. Trip Options Based on Total Price -- WORK IN PROGRESS
-8. Add New Route, Delete Route, Quit Program. -- DONE
-9. Paper -- WORK IN PROGRESS
+To run the program, enter the program name with the flights file as a parameter
 
-when starting to work, pull
-commit, double click to help merge, then push.
+Next, if you enter 0, a menu will appear displaying all the choices of things you can do within 
+the program.
+
+Simply enter the corresponding number of the action you wish to execute.
+
+When prompted for a city, simply enter the city name. Each city will be printed for you to make
+it easier to spell and remember your options.
+When asked for distance,price, etc. Enter the value as a number with no alpha or special characters
+
+*Note, remember to exit the program from the menu, do not hit the X in the top right corner.
+*Failure to correctly exit the program will result in unsaved changes being discarded.

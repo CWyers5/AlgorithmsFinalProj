@@ -46,10 +46,8 @@ int main(int argc, char *argv[]) {
 	std::string cityname;
 	getline(myfile2, citynumberstring);
 	citynum = std::stoi(citynumberstring);
-	//std::cout << "citynum = " << citynum << "\n";
 	for (int k = 0; k < citynum; k++) {
 		getline(myfile2, cityname);
-		//std::cout << cityname << "\n";
 		names.push_back(cityname);
 	}
 
@@ -189,7 +187,7 @@ int main(int argc, char *argv[]) {
 				/*routes are listed with lower number first, by starting at i,
 				we avoid listing a route twice, i think */
 				if (connections[k][p] == 1) {
-					myfile << k + 1 << " " << p + 1 << " " << distances[k][p] << " " << costs[k][p] << ".00" << std::endl;
+					myfile << k + 1 << " " << p + 1 << " " << distances[k][p] << " " << std::fixed << std::setprecision(2) << costs[k][p] << std::endl << std::defaultfloat << std::setprecision(6);
 				}
 			}
 		}
@@ -274,7 +272,7 @@ void shortestPathMiles(int source, int destination) {
 	int h = source;
 	int totalcost = 0;
 	if (parent[h] == -1) {
-		std::cout << "No Direct Path Avaliable\n";
+		std::cout << "No Direct Path Available\n";
 	}
 	else {
 		while (h != destination && h != -1) {
